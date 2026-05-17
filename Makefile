@@ -4,7 +4,7 @@ LD := $(PREFIX)gcc
 
 CFLAGS = -I$(PS3DEV)/ppu/include -I$(PS3DEV)/portlibs/ppu/include -std=gnu99
 LIBPATHS = -L$(PS3DEV)/ppu/lib -L$(PS3DEV)/portlibs/ppu/lib
-LIBS = -ltiny3d -lgcm_sys -lrsx -lsysutil -lm
+LIBS = -ltiny3d -lgcm_sys -lrsx -lsysutil -lm -lsysmodule -lpngdec
 
 OFILES=source/main.o
 LDFLAGS=
