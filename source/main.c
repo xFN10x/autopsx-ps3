@@ -152,6 +152,7 @@ int main()
     sysModuleLoad(SYSMODULE_PNGDEC);
 
     tiny3d_Init(1024 * 1024);
+    //stole this from apollo-ps3, it wasn't in the docs so idk
     tiny3d_UserViewport(1, 0, 0, // 2D position
 		(float) (Video_Resolution.width / 848.0f),  (float) (Video_Resolution.height / 512.0f),   // 2D scale
 		(float) (Video_Resolution.width / 1920.0f), (float) (Video_Resolution.height / 1080.0f)); // 3D scale
