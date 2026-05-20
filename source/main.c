@@ -177,6 +177,10 @@ int main()
 
     loadTextures();
 
+    SND_Init(0);
+
+    SND_SetVoice(2, VOICE_STEREO_16BIT, 441000, 0, )
+
     PlayAudio(getAssetPath("music.mp3"), 0, AUDIO_INFINITE_TIME);
 
     while (running)

@@ -7,6 +7,6 @@ char* getAssetPath(char* localPath) {
     char base[80];
     strcpy(base, ASSETS_PATH);
     char* resolved = strcat(base, localPath);
-    printf("Resolved asset of path: %s to: %s", localPath, resolved);
+    printf("Resolved asset of path: %s to: %s\n", localPath, resolved);
     return resolved;
 }
