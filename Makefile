@@ -20,7 +20,7 @@ BUILD		:=	build
 SOURCES		:=	source 
 DATA		:=	data
 INCLUDES	:=	include
-PKGFILES	:=	$(CURDIR)/pkgfiles
+PKGFILES	:=	pkgfiles
 
 TITLE		:=	AutoPSX
 APPID		:=	FNHB00001
@@ -126,7 +126,7 @@ $(BUILD):
 
 #---------------------------------------------------------------------------------
 clean:
-	@echo clean fireworks3D ...
+	@echo cleaning ...
 	@rm -fr $(BUILD) *.elf *.self *.pkg
 
 #---------------------------------------------------------------------------------
