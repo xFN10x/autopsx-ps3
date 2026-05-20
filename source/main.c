@@ -1,16 +1,26 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <tiny3d.h>
+#include <soundlib/audioplayer.h>
 
 #include <sysmodule/sysmodule.h>
 #include <pngdec/pngdec.h>
+
+#include "mainmenu.h"
+#include "assets.h"
 
 #define SCREEN_TOP 0
 #define SCREEN_DOWN 511
 #define SCREEN_RIGHT 847
 #define SCREEN_LEFT 0
 
+enum Menu
+{
+    MAIN
+};
+
 static bool running = true;
+static int currentMenu = MAIN;
 
 // textures
 void *texMem;
@@ -62,7 +72,7 @@ void drawBackground()
     tiny3d_VertexTexture(0, 1);
 
     tiny3d_End();
-    
+
     // frontmost
     tiny3d_SetTexture(0, bg0o, bg0d.width, bg0d.height, bg0d.pitch, TINY3D_TEX_FORMAT_A8R8G8B8, TEXTURE_LINEAR);
 
@@ -99,18 +109,18 @@ void loadTextures()
     }
     texPointer = texMem;
 
-    s32 bg1 = pngLoadFromFile("/dev_hdd0/game/FNHB00000/assets/bg1.png", &bg1d);
+    s32 bg1 = pngLoadFromFile(getAssetPath("bg1.png"), &bg1d);
     loadPNGToRSX(bg1d, &texPointer, &bg1o);
     printf("bg1 offset %d\n", bg1o);
 
-    s32 bg0 = pngLoadFromFile("/dev_hdd0/game/FNHB00000/assets/bg0.png", &bg0d);
+    s32 bg0 = pngLoadFromFile(getAssetPath("bg0.png"), &bg0d);
     loadPNGToRSX(bg0d, &texPointer, &bg0o);
     printf("bg0 offset %d\n", bg0o);
 }
 
 void draw()
 {
-    bool drawTest = true;
+    bool drawTest = false;
 
     tiny3d_Clear(0xff000000, TINY3D_CLEAR_ALL);
 
@@ -123,6 +133,13 @@ void draw()
                      TINY3D_BLEND_RGB_FUNC_ADD | TINY3D_BLEND_ALPHA_FUNC_ADD);
 
     drawBackground();
+
+    switch (currentMenu)
+    {
+    default:
+        drawMainMenu();
+        break;
+    }
 
     if (drawTest)
     {
@@ -152,13 +169,15 @@ int main()
     sysModuleLoad(SYSMODULE_PNGDEC);
 
     tiny3d_Init(1024 * 1024);
-    //stole this from apollo-ps3, it wasn't in the docs so idk
-    tiny3d_UserViewport(1, 0, 0, // 2D position
-		(float) (Video_Resolution.width / 848.0f),  (float) (Video_Resolution.height / 512.0f),   // 2D scale
-		(float) (Video_Resolution.width / 1920.0f), (float) (Video_Resolution.height / 1080.0f)); // 3D scale
+    // stole this from apollo-ps3, it wasn't in the docs so idk
+    tiny3d_UserViewport(1, 0, 0,                                                                                // 2D position
+                        (float)(Video_Resolution.width / 848.0f), (float)(Video_Resolution.height / 512.0f),    // 2D scale
+                        (float)(Video_Resolution.width / 1920.0f), (float)(Video_Resolution.height / 1080.0f)); // 3D scale
     tiny3d_Project2D();
 
     loadTextures();
+
+    PlayAudio(getAssetPath("music.mp3"), 0, AUDIO_INFINITE_TIME);
 
     while (running)
     {

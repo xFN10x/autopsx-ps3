@@ -42,7 +42,7 @@ LDFLAGS		=	$(MACHDEP) -Wl,-Map,$(notdir $@).map \
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
 LIBS	:=	-lfont -ltiny3d -lgcm_sys -lrsx -lsysutil -lio -lsysmodule \
-			-laudioplayer -lmpg123 -logg -lspu_sound -laudio -lm -lsysfs \
+			-laudioplayer -lmpg123 -logg -lspu_sound -laudio -lpngdec -lm -lsysfs \
 			-lspu_soundmodule
 
 #---------------------------------------------------------------------------------
